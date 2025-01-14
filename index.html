@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
     <style>
-        div {
-          color: green;
+      .success {
+        color: green;
       }
 
       .errors {
-          color: red;
+        color: red;
       }
-  </style>
+    </style>
   </head>
   <body>
     <h1>Kalkulators</h1>
@@ -32,9 +32,12 @@
       buttonInput.addEventListener("click", handleClick);
 
       function handleClick() {
+        outputContainer.classList.remove("errors", "success");
+
         let num1Value = parseFloat(num1Input.value);
         let num2Value = parseFloat(num2Input.value);
         let operatorValue = operatorInput.value;
+
         let errorsArray = validateUserInput(
           num1Value,
           num2Value,
@@ -42,28 +45,30 @@
         );
 
         if (errorsArray.length > 0) {
+          outputContainer.classList.add("errors");
           outputContainer.innerHTML = errorsArray.join("<br>");
           return;
         }
 
+        outputContainer.classList.add("success");
         let result = calc(num1Value, num2Value, operatorValue);
         outputContainer.innerHTML = result;
       }
 
       function calc(n1, n2, op) {
-    switch (op) {
-        case "+":
+        switch (op) {
+          case "+":
             return n1 + n2;
-        case "-":
+          case "-":
             return n1 - n2;
-        case "*":
+          case "*":
             return n1 * n2;
-        case "/":
+          case "/":
             return n1 / n2;
-        default:
+          default:
             return "Kļūdaina darbība";
-    }
-}
+        }
+      }
 
       function validateUserInput(n1, n2, op) {
         let errors = [];
